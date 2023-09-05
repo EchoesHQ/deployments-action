@@ -1,7 +1,7 @@
 #!/bin/bash -l
 
 # includes
-. ./helpers.sh
+. /helpers.sh
 
 git config --global --add safe.directory "${GITHUB_WORKSPACE}"
 
