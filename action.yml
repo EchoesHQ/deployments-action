@@ -1,5 +1,5 @@
 ---
-name: "Deployments Action"
+name: "EchoesHQ Deployments Action"
 author: "EchoesHQ"
 description: "Declare deployments and notify their status to Echoes."
 inputs:
