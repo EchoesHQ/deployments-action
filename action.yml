@@ -3,14 +3,14 @@ name: "EchoesHQ Deployments Action"
 author: "EchoesHQ"
 description: "Declare deployments and notify their status to Echoes."
 inputs:
-  version:
-    description: "Version being deployed. Defaults to tag."
-    required: false
   deliverables:
     description: "Newline-separated list of deliverables the deployment contains (e.g., microservice name, application name)..."
     required: false
   commits:
-    description: "Newline-separated list of commits SHA shipped as part of the deployment. Defaults to listing commits between the last 2 tags."
+    description: "Newline-separated list of commits SHA shipped as part of the deployment. Defaults to listing commits between the last 2 tags or as a last fallback $GITHUB_SHA."
+    required: false
+  version:
+    description: "Version being deployed."
     required: false
   url:
     description: "URL related to the deployment: URL to a tag, to an artefact..."
@@ -39,7 +39,6 @@ runs:
     # to avoid having invalid arguments in getopts we artificially introduce a space (trimmed later on)
     - -t ${{ inputs.action-type }}
     - -v ${{ inputs.version }}
-    - -n ${{ inputs.name }}
     - -d ${{ inputs.deliverables }}
     - -c ${{ inputs.commits }}
     - -u ${{ inputs.url }}
