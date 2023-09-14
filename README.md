@@ -1,6 +1,6 @@
 # About
 
-GitHub Action to post deployment and deployment status to Echoes.
+GitHub Action to post [deployment](https://docs.echoeshq.com/deployments) and [deployment status](https://docs.echoeshq.com/change-failure-rate) to Echoes.
 
 ---
 
@@ -23,15 +23,22 @@ It requires to set the `ECHOES_API_KEY` environment variable with an [API key](h
 > The post of a deployment is idempotent.
 > Retrying a deployment with the **same payload** and **API key** will result in a single deployment in Echoes.
 
+In default mode, the Action expects to work on [tags](https://docs.github.com/en/rest/git/tags?apiVersion=2022-11-28) in order to access a commits list.
+If no tags are found, the fallback is to determine the current commit sha that triggered the workflow using the default variable provided by GitHub, `$GITHUB_SHA`. For more information, see [Events that trigger workflows](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows).
+
+> [!Important]
+> By default `EchoesHQ/deployments-action` does not require to be used in conjonction with the [`actions/checkout` Action](https://github.com/actions/checkout) because it can fallback to `$GITHUB_SHA`.
+> However if you are planning to work with [tags](https://docs.github.com/en/rest/git/tags?apiVersion=2022-11-28) make sure to set the appropriate `actions/checkout` options such as `fetch-depth` and `fetch-tags` to fine tuning to your need.
+
+> [!Warning]
+> Not all commits are of interest. Indeed `Deployments` are used by Echoes to extract some critical information such as Teams and Echoes Labels. Could it be a list of commits extracted from tags, extracted from the `$GITHUB_SHA` or manually provided, those have value for Echoes only if they are attached to a PR that was labeled with [Echoes labels](https://docs.echoeshq.com/categorizing-work). The commits would therefore be properly associated to the work they hold for the team they represent.
+
 ```yaml
 steps:
     - name: Checkout
-    uses: actions/checkout@v3
-    # In default mode, the action expects to work on tags in order to
-    # access a commits list. See Examples below for more details.
-    with:
-        fetch-depth: 100
-        fetch-tags: true
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
 
     - name: Post deploy
         uses: EchoesHQ/deployments-action@v1
@@ -39,6 +46,8 @@ steps:
         env:
             ECHOES_API_KEY: ${{ secrets.ECHOESHQ_API_KEY }}
 ```
+
+See [Examples](#examples) below for more details.
 
 ### Post a deployment status to Echoes:
 
@@ -61,12 +70,12 @@ steps:
   with:
     # Optional. Can either be `post-deploy` or `post-status`. Defaults to `post-deploy`.
     action-type: string
-    # Optional. Version being deployed. Defaults to tag.
-    version: string
-    # Optional. Newline-separated list of deliverables the deployment contains (e.g., microservice name, application name). Defaults to repository name.
+    # Required. Newline-separated list of deliverables the deployment contains (e.g., microservice name, application name). Defaults to repository name.
     deliverables: string
-    # Optional. Newline-separated list of commits SHA shipped as part of the deployment. Defaults to listing commits between the last 2 tags.
+    # Required. Newline-separated list of commits SHA shipped as part of the deployment. Defaults to listing commits between the last 2 tags or as a last fallback $GITHUB_SHA.
     commits: string
+    # Optional. Version being deployed.
+    version: string
     # Optional. URL related to the deployment: URL to a tag, to an artefact etc. Defaults to ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/${tag}
     url: string
 ```
