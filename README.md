@@ -23,15 +23,15 @@ It requires to set the `ECHOES_API_KEY` environment variable with an [API key](h
 > The post of a deployment is idempotent.
 > Retrying a deployment with the **same payload** and **API key** will result in a single deployment in Echoes.
 
-In default mode, the action expects to work on [tags](https://docs.github.com/en/rest/git/tags?apiVersion=2022-11-28) in order to access a commits list.
-If no tags are found, it will fallback to the current commit sha `$GITHUB_SHA` that triggered the workflow. For more information, see [Events that trigger workflows](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows).
+In default mode, the Action expects to work on [tags](https://docs.github.com/en/rest/git/tags?apiVersion=2022-11-28) in order to access a commits list.
+If no tags are found, the fallback is to determine the current commit sha that triggered the workflow using the default variable provided by GitHub, `$GITHUB_SHA`. For more information, see [Events that trigger workflows](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows).
 
 > [!Important]
-> By default `EchoesHQ/deployments-action` do not require to be used in conjonction with the [`actions/checkout` Action](https://github.com/actions/checkout) because it can fallback to `$GITHUB_SHA`.
+> By default `EchoesHQ/deployments-action` does not require to be used in conjonction with the [`actions/checkout` Action](https://github.com/actions/checkout) because it can fallback to `$GITHUB_SHA`.
 > However if you are planning to work with [tags](https://docs.github.com/en/rest/git/tags?apiVersion=2022-11-28) make sure to set the appropriate `actions/checkout` options such as `fetch-depth` and `fetch-tags` to fine tuning to your need.
 
 > [!Warning]
-> Not any commits would be of interest. Indeed `Deployments` are used by Echoes to extract some critical information such as Teams and Echoes Labels. Could it be a list of commits extracted from tags, extracted from the `$GITHUB_SHA` or manually provided, those have value for Echoes only if they are attached to a PR that was labeled with [Echoes labels](https://docs.echoeshq.com/categorizing-work). The commits would therefore be properly associated to the work they hold for the team they represent.
+> Not all commits are of interest. Indeed `Deployments` are used by Echoes to extract some critical information such as Teams and Echoes Labels. Could it be a list of commits extracted from tags, extracted from the `$GITHUB_SHA` or manually provided, those have value for Echoes only if they are attached to a PR that was labeled with [Echoes labels](https://docs.echoeshq.com/categorizing-work). The commits would therefore be properly associated to the work they hold for the team they represent.
 
 ```yaml
 steps:
