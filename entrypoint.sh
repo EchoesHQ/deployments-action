@@ -95,7 +95,7 @@ then
     # No commits list provided therefore look for tags
     echo "Looking for commits via tags..."
 
-    latestTags=$(git for-each-ref refs/tags --sort=-authordate --format='%(refname:short)' --count=2 --merged)
+    latestTags=$(git for-each-ref refs/tags --sort=-committerdate --format='%(refname:short)' --count=2 --merged)
 
     if [ -z "${latestTags}" ]
     then
