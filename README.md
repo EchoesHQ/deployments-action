@@ -70,9 +70,9 @@ See [Examples](#examples) below for more details.
   with:
     # Optional. Can either be `post-deploy` or `post-status`. Defaults to `post-deploy`.
     action-type: string
-    # Required. Newline-separated list of deliverables the deployment contains (e.g., microservice name, application name). Defaults to repository name.
+    # Required. Newline-separated or comma-separated list of deliverables the deployment contains (e.g., microservice name, application name). Defaults to repository name.
     deliverables: string
-    # Required. Newline-separated list of commits SHA shipped as part of the deployment. Defaults to listing commits between the last 2 tags or as a last fallback $GITHUB_SHA.
+    # Required. Newline-separated or comma-separated list of commits SHA shipped as part of the deployment. Defaults to listing commits between the last 2 tags or as a last fallback $GITHUB_SHA.
     commits: string
     # Optional. Version being deployed.
     version: string

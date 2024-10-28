@@ -4,10 +4,10 @@ author: "EchoesHQ"
 description: "Declare deployments and notify their status to Echoes."
 inputs:
   deliverables:
-    description: "Newline-separated list of deliverables the deployment contains (e.g., microservice name, application name)..."
+    description: "Newline-separated or comma-separated list of deliverables the deployment contains (e.g., microservice name, application name)..."
     required: false
   commits:
-    description: "Newline-separated list of commits SHA shipped as part of the deployment. Defaults to listing commits between the last 2 tags or as a last fallback $GITHUB_SHA."
+    description: "Newline-separated or comma-separated list of commits SHA shipped as part of the deployment. Defaults to listing commits between the last 2 tags or as a last fallback $GITHUB_SHA."
     required: false
   version:
     description: "Version being deployed."
