@@ -41,7 +41,7 @@ steps:
         fetch-depth: 0
 
     - name: Post deploy
-        uses: EchoesHQ/deployments-action@v1
+        uses: EchoesHQ/deployments-action@v1.3.0
         id: post-deploy
         env:
             ECHOES_API_KEY: ${{ secrets.ECHOESHQ_API_KEY }}
@@ -53,7 +53,7 @@ See [Examples](#examples) below for more details.
 
 ```yaml
 - name: Post status
-    uses: EchoesHQ/deployments-action@v1
+    uses: EchoesHQ/deployments-action@v1.3.0
     with:
         action-type: post-status
         deployment-id: ${{ steps.post-deploy.outputs.deployment_id }}
@@ -66,7 +66,7 @@ See [Examples](#examples) below for more details.
 
 ```yaml
 - name: Post a deployment
-  uses: EchoesHQ/deployments-action@v1
+  uses: EchoesHQ/deployments-action@v1.3.0
   with:
     # Optional. Can either be `post-deploy` or `post-status`. Defaults to `post-deploy`.
     action-type: string
@@ -82,7 +82,7 @@ See [Examples](#examples) below for more details.
 
 ```yaml
 - name: Post a deployment status
-  uses: EchoesHQ/deployments-action@v1
+  uses: EchoesHQ/deployments-action@v1.3.0
   with:
     # Required.
     action-type: post-status
@@ -122,7 +122,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Post deploy to Echoes
-        uses: EchoesHQ/deployments-action@v1
+        uses: EchoesHQ/deployments-action@v1.3.0
         id: post-deploy
         with:
           commits: |-
@@ -167,7 +167,7 @@ jobs:
           echo "Deploying something..."
 
       - name: Post deploy status
-        uses: EchoesHQ/deployments-action@v1
+        uses: EchoesHQ/deployments-action@v1.3.0
         with:
           action-type: post-status
           # Grab the deployment_id from the job that was responsible for posting the deployment.
